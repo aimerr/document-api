@@ -1,3 +1,6 @@
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
 @GetMapping("/archivos/{fileName}")
 	public ResponseEntity<Void> redirect1(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable String fileName) throws IOException {
