@@ -1,0 +1,26 @@
+@GetMapping("/archivos/{fileName}")
+	public ResponseEntity<Void> redirect1(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String fileName) throws IOException {
+
+		File file = new File("C:\\Users\\aimer\\Downloads\\" + fileName);
+		if (file.exists()) {
+
+			MediaType mediaType = MediaType.parseMediaType(URLConnection.guessContentTypeFromName(file.getName()));
+			if (mediaType == null) {
+				mediaType = MediaType.parseMediaType("application/octet-stream");	       
+			}
+			
+			return ResponseEntity.status(HttpStatus.FOUND)
+					.header("Content-Disposition", "attachment;filename=" + file.getName())
+					.location(URI.create(
+							//"https://www.tesuva.edu.co/phocadownloadpap/Fundamentos%20de%20programcion%20en%20Java.pdf"
+//							"https://www.JSON.org/favicon.png"
+//							"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+							"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+							))
+					.build();
+			
+		}
+		return ResponseEntity.noContent().build();
+
+	}
