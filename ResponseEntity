@@ -1,0 +1,23 @@
+@GetMapping("/archivos1/{fileName}")
+	public ResponseEntity<?> redirect1(@PathVariable String fileName) throws IOException {
+
+		File file = new File("C:\\Users\\aimer\\Downloads\\" + fileName);
+		InputStreamResource resource = null;
+		if (file.exists()) {
+
+			MediaType mediaType = MediaType.parseMediaType(URLConnection.guessContentTypeFromName(file.getName()));
+			if (mediaType == null) {
+				mediaType = MediaType.parseMediaType("application/octet-stream");
+			}
+
+			DataDto dto = new DataDto(HttpStatus.OK, "Documento encontrado.", resource,
+					"https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css");
+			return ResponseEntity.ok().header("Content-Disposition", "attachment;filename=" + file.getName()).body(dto);
+		} else {
+
+			DataDto dto = new DataDto(HttpStatus.NO_CONTENT, "No se encontro este documento.", resource, "");
+
+			return ResponseEntity.ok().header("Content-Disposition", "attachment;filename=" + file.getName()).body(dto);
+		}
+
+	}
